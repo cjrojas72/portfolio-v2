@@ -8,3 +8,35 @@ body, html{
 *{
   box-sizing: border-box;
 }
+
+/* Mobile: trigger hover-equivalent styles when card scrolls into view */
+@media (max-width: 768px) {
+  /* Project cards */
+  .project-card.is-visible {
+    background-color: rgba(255, 255, 255, 0.04);
+  }
+  .project-card.is-visible .card-image {
+    transform: scale(1.05);
+  }
+  .project-card.is-visible .card-hover-buttons {
+    transform: translateY(-25px);
+    opacity: 1;
+  }
+  .project-card.is-visible .card-title {
+    color: rgb(96, 165, 250); /* blue-400 */
+  }
+  .project-card.is-visible .card-tech-tag {
+    color: rgb(147, 197, 253); /* blue-300 */
+  }
+
+  /* Skill cards */
+  .skill-card.is-visible {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  .skill-card.is-visible .skill-icon {
+    transform: scale(1.1);
+  }
+  .skill-card.is-visible .skill-tag {
+    color: rgb(147, 197, 253); /* blue-300 */
+  }
+}

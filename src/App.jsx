@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 import motivateMeImg from './assets/motivateme.png';
 import manaWatchImg from './assets/manawatch.png';
@@ -59,6 +59,21 @@ const App = () => {
       .catch(() => setFormStatus('error'));
   };
 
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 768px)');
+    if (!mq.matches) return;
+
+    const cards = document.querySelectorAll('[data-mobile-card]');
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach(entry => {
+        entry.target.classList.toggle('is-visible', entry.isIntersecting);
+      }),
+      { threshold: 0.35 }
+    );
+    cards.forEach(card => observer.observe(card));
+    return () => observer.disconnect();
+  }, []);
+
   const profile = {
     name: "Christian Rojas",
     role: "Software Developer",
@@ -99,7 +114,7 @@ const App = () => {
     ]
   },
   {
-    title: "AI & Experimentation",
+    title: "AI",
     icon: <Sparkles className="text-yellow-400" />,
     skills: [
       "AI-assisted development",
@@ -118,7 +133,7 @@ const App = () => {
       "Mentorship",
       "Performance Optimization",
       "Technical Documentation",
-      "CI/CD"
+      "CI/CD",
     ]
   },
   {
@@ -359,14 +374,14 @@ const experience = [
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {skillGroups.map((group, i) => (
-              <div key={i} className="bg-white/[0.03] border border-white/5 p-6 rounded-[2rem] hover:bg-white/[0.05] transition-all group">
-                <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+              <div key={i} data-mobile-card className="skill-card bg-white/[0.03] border border-white/5 p-6 rounded-[2rem] hover:bg-white/[0.05] transition-all group">
+                <div className="skill-icon w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   {group.icon}
                 </div>
                 <h3 className="font-bold mb-4 text-lg">{group.title}</h3>
                 <div className="flex flex-wrap gap-2">
                   {group.skills.map((skill, j) => (
-                    <span key={j} className="text-[10px] uppercase tracking-widest px-2 py-1 rounded-md bg-white/5 text-gray-500 group-hover:text-blue-300 transition-colors">
+                    <span key={j} className="skill-tag text-[10px] uppercase tracking-widest px-2 py-1 rounded-md bg-white/5 text-gray-500 group-hover:text-blue-300 transition-colors">
                       {skill}
                     </span>
                   ))}
@@ -468,7 +483,8 @@ const experience = [
             {projects.map((project, i) => (
               <div
                 key={i}
-                className="group flex flex-col bg-white/[0.02] border border-white/5 rounded-[2.5rem] overflow-hidden hover:bg-white/[0.04] transition-all"
+                data-mobile-card
+                className="project-card group flex flex-col bg-white/[0.02] border border-white/5 rounded-[2.5rem] overflow-hidden hover:bg-white/[0.04] transition-all"
               >
 
                 {/* Project Image */}
@@ -479,14 +495,14 @@ const experience = [
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-500"
+                    className="card-image absolute inset-0 w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-500"
                   />
 
                   {/* Gradient Overlay */}
                   <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-from)_0%,_transparent_70%)]" />
 
                   {/* Hover Buttons */}
-                  <div className="absolute bottom-4 left-6 right-6 flex justify-between items-center z-20 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                  <div className="card-hover-buttons absolute bottom-4 left-6 right-6 flex justify-between items-center z-20 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
                     <div className="flex gap-2">
                       <a
                         href={project.github}
@@ -508,7 +524,7 @@ const experience = [
                 {/* Project Content */}
                 <div className="p-8 flex flex-col flex-grow">
                   <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-2xl font-bold group-hover:text-blue-400 transition-colors">
+                    <h3 className="card-title text-2xl font-bold group-hover:text-blue-400 transition-colors">
                       {project.title}
                     </h3>
                   </div>
@@ -521,7 +537,7 @@ const experience = [
                     {project.tech.map((t, idx) => (
                       <span
                         key={idx}
-                        className="px-3 py-1 rounded-full bg-white/5 border border-white/5 text-gray-500 text-[10px] font-bold uppercase tracking-widest group-hover:text-blue-300 transition-colors"
+                        className="card-tech-tag px-3 py-1 rounded-full bg-white/5 border border-white/5 text-gray-500 text-[10px] font-bold uppercase tracking-widest group-hover:text-blue-300 transition-colors"
                       >
                         {t}
                       </span>
