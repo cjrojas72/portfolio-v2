@@ -3,6 +3,7 @@ import emailjs from '@emailjs/browser';
 import motivateMeImg from './assets/motivateme.png';
 import manaWatchImg from './assets/manawatch.png';
 import toDoListerImg from './assets/todolister.png';
+import legacyPortImg from './assets/legacyPort.png';
 import { 
   Github, 
   Linkedin, 
@@ -280,6 +281,24 @@ const experience = [
     link: "https://todolistercr.vercel.app/",
     github: "https://github.com/cjrojas72/angular-to-do",
     image: toDoListerImg,
+    gradient: "from-emerald-600/20 to-teal-600/20"
+  },
+  {
+    title: "Legacy Portfolio Site",
+    description: "Personal portfolio site showcasing early projects and web development skills.",
+    highlights: [
+      "Built a fully responsive portfolio site using HTML, CSS, and JavaScript",
+      "Highlighted personal projects, skills, and contact info in a clean, user-friendly layout"
+    ],
+    tech: [
+      "HTML",
+      "CSS",
+      "Javascript",
+      "Responsive Design"
+    ],
+    link: "https://cjrojas72.github.io/Christian-Rojas/",
+    github: "https://github.com/cjrojas72/Christian-Rojas",
+    image: legacyPortImg,
     gradient: "from-emerald-600/20 to-teal-600/20"
   }
 ];
