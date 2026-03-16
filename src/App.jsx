@@ -38,7 +38,15 @@ const App = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [formState, setFormState] = useState({ name: '', email: '', subject: '', message: '' });
   const [formStatus, setFormStatus] = useState(null); // 'sending' | 'success' | 'error'
+  const [lightbox, setLightbox] = useState(null); // { src, title } | null
   const formRef = useRef(null);
+
+  useEffect(() => {
+    if (!lightbox) return;
+    const onKey = (e) => { if (e.key === 'Escape') setLightbox(null); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [lightbox]);
 
   const EMAILJS_SERVICE_ID  = 'service_beaxtop';
   const EMAILJS_TEMPLATE_ID = 'template_g5u0c67';
@@ -82,7 +90,7 @@ const App = () => {
     phone: "908-967-8157",
     github: "https://github.com/cjrojas72",
     linkedin: "https://www.linkedin.com/in/christian-rojas-rx441/",
-    bio: "Building digital experiences that make a difference. Passionate about crafting seamless user experiences and scalable solutions.",
+    bio: "Passionate about building modern web applications that are fast, scalable, and enjoyable to use. I love turning ideas into interactive products and continuously learning new technologies to craft better digital experiences.",
   }
 
   const skillGroups = [
@@ -215,8 +223,12 @@ const experience = [
  const projects = [
   {
     title: "MotivateME",
-    description:
-      "MotivateME is an AI-powered motivational chat application that provides users with supportive guidance through conversational AI. Built with React and integrated with Puter.js for AI interactions, authentication, and lightweight data storage.",
+    description: "AI-powered motivational chatbot built with React and Puter.ai.",
+    highlights: [
+      "Implemented streaming AI responses for real-time conversational feedback",
+      "Designed a lightweight serverless architecture using Puter KV storage",
+      "Built client-side caching to reduce repeated API requests and improve performance",
+    ],
     tech: [
       "React",
       "JavaScript",
@@ -231,8 +243,12 @@ const experience = [
   },
   {
     title: "ManaWatch",
-    description:
-      "A Magic: The Gathering card collection and price tracking application that integrates with the Scryfall and MTGJSON APIs to provide real-time card data and market information. Built with Angular and Firestore to manage user collections and dynamic card search.",
+    description: "Magic: The Gathering card price tracker and analytics dashboard.",
+    highlights: [
+      "Built interactive data visualizations to track card value trends over time",
+      "Implemented API-driven data fetching and client-side filtering for fast search and analysis",
+      "Designed a responsive dashboard UI optimized for exploring large card datasets",
+    ],
     tech: [
       "Angular",
       "TypeScript",
@@ -249,8 +265,12 @@ const experience = [
   },
   {
     title: "ToDoLister",
-    description:
-      "A reactive task management application built with Angular and Firebase that allows users to create, update, and manage tasks in real time. Designed with a modern responsive UI using Tailwind CSS.",
+    description: "Task management application built with Angular and modern web tooling.",
+    highlights: [
+      "Developed reusable Angular components for task creation, editing, and filtering",
+      "Implemented state management for dynamic task updates and persistence",
+      "Built a responsive interface focused on usability and efficient task organization",
+    ],
     tech: [
       "Angular",
       "TypeScript",
@@ -341,7 +361,7 @@ const experience = [
           <h1 className="text-6xl md:text-8xl font-black mb-6 tracking-tighter">
             Hello, I'm <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-200 to-cyan-400">
-              {profile.name.split(' ')[0]}
+              {profile.name}
             </span>
           </h1>
           
@@ -358,7 +378,7 @@ const experience = [
             <button 
               onClick = {() => scrollToTarget("projects")}
               className="flex items-center gap-2 px-8 py-4 bg-white text-black rounded-2xl font-bold hover:bg-blue-500 hover:text-white transition-all shadow-xl shadow-blue-600/20 cursor-pointer">
-              View Work <ArrowUpRight size={18} />
+              View My Work <ArrowUpRight size={18} />
             </button>
             <div className="flex items-center gap-6 ml-4">
               <a href={profile.github} className="text-gray-500 hover:text-white transition-colors"><Github size={24} /></a>
@@ -489,7 +509,8 @@ const experience = [
 
                 {/* Project Image */}
                 <div
-                  className={`aspect-video w-full bg-gradient-to-br ${project.gradient} relative overflow-hidden border-b border-white/5`}
+                  className={`aspect-video w-full bg-gradient-to-br ${project.gradient} relative overflow-hidden border-b border-white/5 cursor-zoom-in`}
+                  onClick={() => setLightbox({ src: project.image, title: project.title })}
                 >
                   {/* Screenshot */}
                   <img
@@ -523,15 +544,22 @@ const experience = [
 
                 {/* Project Content */}
                 <div className="p-8 flex flex-col flex-grow">
-                  <div className="flex justify-between items-center mb-4">
-                    <h3 className="card-title text-2xl font-bold group-hover:text-blue-400 transition-colors">
-                      {project.title}
-                    </h3>
-                  </div>
+                  <h3 className="card-title text-2xl font-bold mb-2 group-hover:text-blue-400 transition-colors">
+                    {project.title}
+                  </h3>
 
-                  <p className="text-gray-400 text-sm leading-relaxed mb-8 flex-grow">
+                  <p className="text-gray-400 text-sm leading-relaxed mb-4">
                     {project.description}
                   </p>
+
+                  <ul className="space-y-2 mb-8 flex-grow">
+                    {project.highlights.map((point, idx) => (
+                      <li key={idx} className="flex gap-3 text-gray-500 text-sm leading-relaxed">
+                        <div className="mt-2 w-1 h-1 rounded-full bg-blue-500 shrink-0" />
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
 
                   <div className="flex flex-wrap gap-2">
                     {project.tech.map((t, idx) => (
@@ -677,6 +705,34 @@ const experience = [
           </div>
         </footer>
       </main>
+      {/* Lightbox */}
+      {lightbox && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 md:p-10"
+          onClick={() => setLightbox(null)}
+        >
+          <div
+            className="relative max-w-5xl w-full rounded-3xl overflow-hidden shadow-2xl shadow-black/60 border border-white/10"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={lightbox.src}
+              alt={lightbox.title}
+              className="w-full h-auto block"
+            />
+            <button
+              onClick={() => setLightbox(null)}
+              className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/60 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all"
+              aria-label="Close"
+            >
+              <X size={16} />
+            </button>
+            <div className="absolute bottom-0 left-0 right-0 px-6 py-4 bg-gradient-to-t from-black/70 to-transparent">
+              <p className="text-white font-bold text-lg">{lightbox.title}</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
