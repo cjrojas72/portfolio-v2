@@ -76,7 +76,7 @@ const App = () => {
 
   const profile = {
     name: "Christian Rojas",
-    role: "Software Developer",
+    role: "Full-Stack Web Developer",
     location: "USA / Florida",
     email: "cjrojas72@gmail.com",
     phone: "908-967-8157",
@@ -287,7 +287,7 @@ const experience = [
       {/* Navigation */}
       <nav className="fixed w-full z-50 px-6 py-4 flex justify-between items-center bg-[#030303]/60 backdrop-blur-xl border-b border-white/5">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-tr from-blue-500 to-cyan-400 rounded-xl flex items-center justify-center text-sm font-bold shadow-lg shadow-blue-500/20">CR</div>
+          <img src="/cr-logo.svg" alt="CR Logo" className="w-10 h-10 shadow-lg shadow-blue-500/20" />
           <span className="font-bold tracking-tight text-xl">Chris<span className="text-blue-400">.dev</span></span>
         </div>
         <div className="hidden md:flex items-center gap-8">
