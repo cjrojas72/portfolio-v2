@@ -4,6 +4,7 @@ import motivateMeImg from './assets/motivateme.png';
 import manaWatchImg from './assets/manawatch.png';
 import toDoListerImg from './assets/todolister.png';
 import legacyPortImg from './assets/legacyPort.png';
+import steadilyImg from './assets/steadily.png'
 import { 
   Github, 
   Linkedin, 
@@ -120,7 +121,8 @@ const App = () => {
       "REST APIs",
       "PostgreSQL",
       "MongoDB",
-      "Firestore"
+      "Firestore",
+      "AWS Lambda"
     ]
   },
   {
@@ -143,7 +145,7 @@ const App = () => {
       "Mentorship",
       "Performance Optimization",
       "Technical Documentation",
-      "CI/CD",
+      "CI/CD - Github Actions",
     ]
   },
   {
@@ -154,7 +156,8 @@ const App = () => {
       "JIRA",
       "Confluence",
       "Figma",
-      "TortoiseSVN"
+      "TortoiseSVN",
+      "AWS"
     ]
   }
 ];
@@ -225,6 +228,29 @@ const experience = [
 
  const projects = [
   {
+    title: "Steadily",
+    description: "Full-stack personal finance app with a React frontend and a Python AWS Lambda backend.",
+    highlights: [
+      "Delivered a responsive React + Tailwind finance dashboard for budgeting, transactions, and analytics",
+      "Engineered a serverless Python backend on AWS Lambda with API Gateway and Supabase Postgres",
+      "Implemented secure JWT auth, payload normalization, and event-driven UI sync for a more reliable experience",
+      "Established GitHub Actions CI/CD to automate frontend deployment to S3 + CloudFront and backend Lambda updates"
+    ],
+    tech: [
+      "React",
+      "Vite",
+      "Tailwind CSS",
+      "Recharts",
+      "Python",
+      "Supabase",
+      "AWS Lambda"
+    ],
+    link: "https://d17qicjfvn0awy.cloudfront.net/",
+    github: "https://github.com/cjrojas72/steadily",
+    image: steadilyImg,
+    gradient: "from-blue-600/20 to-cyan-600/20"
+  },
+  {
     title: "MotivateME",
     description: "AI-powered motivational chatbot built with React and Puter.ai.",
     highlights: [
@@ -265,25 +291,6 @@ const experience = [
     github: "https://github.com/cjrojas72/manawatch",
     image: manaWatchImg,
     gradient: "from-blue-600/20 to-cyan-600/20"
-  },
-  {
-    title: "ToDoLister",
-    description: "Task management application built with Angular and modern web tooling.",
-    highlights: [
-      "Developed reusable Angular components for task creation, editing, and filtering",
-      "Implemented state management for dynamic task updates and persistence",
-      "Built a responsive interface focused on usability and efficient task organization",
-    ],
-    tech: [
-      "Angular",
-      "TypeScript",
-      "Firebase",
-      "Tailwind CSS"
-    ],
-    link: "https://todolistercr.vercel.app/",
-    github: "https://github.com/cjrojas72/angular-to-do",
-    image: toDoListerImg,
-    gradient: "from-emerald-600/20 to-teal-600/20"
   },
   {
     title: "Legacy Portfolio Site",
